@@ -20,8 +20,9 @@ async def on_message(message):
         setup(message.guild.id, message.guild.id)
         print(f'Setup for server #{message.guild.id} complete.')
         await message.channel.send("This channel will now receive free game updates.")
-       
 
+@client.event
+async def on_Game_Release():
+    if 
     
-
 client.run(token)
