@@ -11,3 +11,4 @@ def setup(x,y):
     dataCol = dataB["Servers"]
     channelData = {"ServerID" : x , "ChannelID" : y}
     x = dataCol.insert_one(channelData)
+    
