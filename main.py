@@ -1,7 +1,6 @@
 import os
 import discord
 from dotenv import load_dotenv
-from setupmanager import setup
 import pymongo
 import asyncio
 
