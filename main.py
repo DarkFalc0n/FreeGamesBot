@@ -1,4 +1,6 @@
+from DBmanager import setup
 import os
+from utils import newGameAvailable
 import discord
 from dotenv import load_dotenv
 import pymongo
@@ -22,14 +24,14 @@ async def on_ready():
 async def on_message(message):
     if message.author == client.user:
         return
-    if message.content == '@setup':
+    if message.content == '*setup':
         setup(message.guild.id, message.guild.id)
         print(f'Setup for server #{message.guild.id} complete.')
         await message.channel.send("This channel will now receive free game updates.")
 
 @client.event
 async def on_Game_Release():
-    if new_game_available() == True:
+    if newGameAvailable() == True:
         channelList = dataCol.find({}, {ChannelID:1, _id:0, strict:0})
         for i in channelList:
             channel = client.get_channel(i)
