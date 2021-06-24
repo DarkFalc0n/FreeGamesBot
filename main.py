@@ -1,5 +1,6 @@
-from DBmanager import setup
 import os
+from DBmanager import setup
+
 from utils import newGameAvailable
 import discord
 from dotenv import load_dotenv

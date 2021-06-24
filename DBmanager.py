@@ -1,6 +1,7 @@
 from dotenv.main import load_dotenv
 import pymongo
 from dotenv import load_dotenv 
+import os
 
 load_dotenv
 connect = os.getenv('MongoDB_URL')

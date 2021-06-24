@@ -26,7 +26,7 @@ def getGameDetails(name):
 def isOfferActive(name):
     for x in range(len(gameDataElements)):
         if gameDataElements[x]["title"] == name:
-            if time.strptime(gameDataElements[x]["effectiveDate"][:10], "%d-%m-%Y") <= datetime.now(tz=utc):
+            if datetime.time.strptime(gameDataElements[x]["effectiveDate"][:10], "%d-%m-%Y") <= datetime.now(tz=utc):
                 print("Detected that a  game has active offers")
                 return True
             else:

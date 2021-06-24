@@ -4,7 +4,7 @@ import datetime
 
 def newGameAvailable():
     p = False
-    f.open(f".\update_data\Updated_EGS.txt", "r")
+    f = open("./update_data/Updated_EGS.txt", "r")
     x = (f.read().split("\n"))
     y = getFreeGames()
     for i in y:
@@ -18,7 +18,9 @@ def dateConvert(date):
 
 #Game Details = {name, company, date, active_status, image_url, game_url, og_price}
 def newGameEmbed():
+
     y = getFreeGames()
+    f = open("./update_data/Updated_EGS.txt", "r")
     x = (f.read().split("\n"))
     for i in y:
         if x.count(i) == 0:
@@ -29,7 +31,7 @@ def newGameEmbed():
     embed.add_field(name = "Offer Status", value=details[3], inline=True)
     embed.set_image(url = details[4])
     embed.set_footer(text = "Claim the free game")
-    f.open(f".\update_data\Updated_EGS.txt", "a")
+    f = open("./update_data/Updated_EGS.txt", "a")
     f.write(i + "\n")
     print(f"Created an embed for game: {details[0]}")
     return embed
