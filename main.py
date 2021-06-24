@@ -1,11 +1,12 @@
 import os
 from DBmanager import setup
 
-from utils import newGameAvailable
+from utils import newGameAvailable, newGameEmbed
 import discord
 from dotenv import load_dotenv
 import pymongo
 import asyncio
+
 
 load_dotenv()
 token = os.getenv('DISCORD_TOKEN')
@@ -32,14 +33,18 @@ async def on_message(message):
 
 @client.event
 async def on_Game_Release():
-    if newGameAvailable() == True:
-        channelList = dataCol.find({}, {ChannelID:1, _id:0, strict:0})
-        for i in channelList:
-            channel = client.get_channel(i)
-            await channel.send(newGameEmbed())
-        print ("Sent a new update to all channels")
-    await asyncio.sleep(300)
-    
-client.loop.create_task(on_Game_Release())   
+    while (True):
+        if newGameAvailable() == True:
+            channelList = dataCol.find({}, {'ChannelID':1, '_id':0})
+            await client.wait_until_ready()
+            for i in channelList:
+                Cid = int(i["ChannelID"])
+                channelToSend = client.get_channel(Cid)  
+                await channelToSend.send("@everyone", embed = newGameEmbed())
+            print ("Sent a new update to all channels")
+        await asyncio.sleep(60)
+
+client.loop.create_task(on_Game_Release())
+   
     
 client.run(token)

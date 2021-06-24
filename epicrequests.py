@@ -1,6 +1,7 @@
 import requests
 import json
 import datetime
+import time
 import pytz
 
 url = "https://store-site-backend-static.ak.epicgames.com/freeGamesPromotions"
@@ -13,6 +14,7 @@ gameData = json.loads(response.text)
 gameDataElements = gameData["data"]["Catalog"]["searchStore"]["elements"]
 
 def getFreeGames():
+    y = []
     for x in range(len(gameDataElements)):
         y.append((gameDataElements[x]["title"]))
     return y
@@ -21,12 +23,12 @@ def getGameDetails(name):
     for x in range(len(gameDataElements)):
         if gameDataElements[x]["title"] == name:
             print(f"Fetched game details for {name}")
-            return [gameDataElements[x]["title"], gameDataElements[x]["seller"]["name"], gameDataElements[x]["effectiveDate"][:10], gameDataElements[x]["status"], gameDataElements[x]["keyImages"][0]["url"], "https://www.epicgames.com/store/en-US/p/" + gameDataElements[x]["productSlug"], gameDataElements[x]["price"]["totalPrice"]["fmtPrice"]["origianlPrice"]]
+            return [gameDataElements[x]["title"], gameDataElements[x]["seller"]["name"], gameDataElements[x]["effectiveDate"][:10], gameDataElements[x]["status"], gameDataElements[x]["keyImages"][0]["url"], "https://www.epicgames.com/store/en-US/p/" + gameDataElements[x]["productSlug"], gameDataElements[x]["price"]["totalPrice"]["fmtPrice"]["originalPrice"]]
 
 def isOfferActive(name):
     for x in range(len(gameDataElements)):
         if gameDataElements[x]["title"] == name:
-            if datetime.time.strptime(gameDataElements[x]["effectiveDate"][:10], "%d-%m-%Y") <= datetime.now(tz=utc):
+            if pytz.utc.localize(datetime.datetime.strptime(gameDataElements[x]["effectiveDate"][:10], "%Y-%m-%d")) <= datetime.datetime.now(tz = pytz.utc):
                 print("Detected that a  game has active offers")
                 return True
             else:
