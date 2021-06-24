@@ -31,5 +31,6 @@ def newGameEmbed():
     embed.set_footer(text = "Claim the free game")
     f.open(f".\update_data\Updated_EGS.txt", "a")
     f.write(i + "\n")
+    print(f"Created an embed for game: {details[0]}")
     return embed
 

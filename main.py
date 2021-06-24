@@ -8,7 +8,7 @@ import asyncio
 
 load_dotenv()
 token = os.getenv('DISCORD_TOKEN')
-connect = os.getenv('MongoDB_URL')\
+connect = os.getenv('MongoDB_URL')
 
 dbclient = pymongo.MongoClient(connect)
 dataB = dbclient["FreeGamesBot"]
@@ -36,6 +36,7 @@ async def on_Game_Release():
         for i in channelList:
             channel = client.get_channel(i)
             await channel.send(newGameEmbed())
+        print ("Sent a new update to all channels")
     await asyncio.sleep(300)
     
 client.loop.create_task(on_Game_Release())   
