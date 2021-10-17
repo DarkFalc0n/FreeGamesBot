@@ -22,8 +22,15 @@ def getFreeGames():
 def getGameDetails(name):
     for x in range(len(gameDataElements)):
         if gameDataElements[x]["title"] == name:
+            if gameDataElements[x]["productSlug"] == None:
+                if gameDataElements[x]["urlSlug"] == None:
+                    urlgen = "not-found"
+                else:
+                    urlgen = gameDataElements[x]["urlSlug"]
+            else:
+                urlgen = gameDataElements[x]["productSlug"]
             print(f"Fetched game details for {name}")
-            return [gameDataElements[x]["title"], gameDataElements[x]["seller"]["name"], gameDataElements[x]["effectiveDate"][:10], gameDataElements[x]["status"], gameDataElements[x]["keyImages"][0]["url"], "https://www.epicgames.com/store/en-US/p/" + gameDataElements[x]["productSlug"], gameDataElements[x]["price"]["totalPrice"]["fmtPrice"]["originalPrice"]]
+            return [gameDataElements[x]["title"], gameDataElements[x]["seller"]["name"], gameDataElements[x]["effectiveDate"][:10], gameDataElements[x]["status"], gameDataElements[x]["keyImages"][0]["url"], "https://www.epicgames.com/store/en-US/p/" + urlgen, gameDataElements[x]["price"]["totalPrice"]["fmtPrice"]["originalPrice"]]
 
 def isOfferActive(name):
     for x in range(len(gameDataElements)):
