@@ -9,9 +9,12 @@ url = "https://store-site-backend-static.ak.epicgames.com/freeGamesPromotions"
 payload={}
 headers = {}
 
-response = requests.request("GET", url, headers=headers, data=payload)
-gameData = json.loads(response.text)
-gameDataElements = gameData["data"]["Catalog"]["searchStore"]["elements"]
+def requestData():
+    print("Fetched data now")
+    response = requests.request("GET", url, headers=headers, data=payload)
+    gameData = json.loads(response.text)
+    global gameDataElements
+    gameDataElements = gameData["data"]["Catalog"]["searchStore"]["elements"]
 
 def getGameReleaseDate(x):
     gameReleaseDate = gameDataElements[x]["promotions"]["promotionalOffers"][0]["promotionalOffers"][0]["startDate"][:10] if gameDataElements[x]["promotions"]["promotionalOffers"] != [] else gameDataElements[x]["effectiveDate"][:10]

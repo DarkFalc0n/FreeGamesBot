@@ -6,6 +6,7 @@ import discord
 from dotenv import load_dotenv
 import pymongo
 import asyncio
+from epicrequests import requestData
 
 
 load_dotenv()
@@ -32,6 +33,12 @@ async def on_message(message):
         await message.channel.send("This channel will now receive free game updates.")
 
 @client.event
+async def epic_Request():
+    while (True):
+        requestData()
+        await asyncio.sleep(120)
+
+@client.event
 async def on_Game_Release():
     while (True):
         if newGameAvailable() == True:
@@ -44,7 +51,10 @@ async def on_Game_Release():
             print ("Sent a new update to all channels")
         await asyncio.sleep(60)
 
+
+client.loop.create_task(epic_Request())
 client.loop.create_task(on_Game_Release())
+
    
     
 client.run(token)
