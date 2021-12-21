@@ -32,16 +32,12 @@ async def on_message(message):
         print(f'Setup for server #{message.guild.id} complete.')
         await message.channel.send("This channel will now receive free game updates.")
 
-@client.event
-async def epic_Request():
-    while (True):
-        requestData()
-        await asyncio.sleep(120)
 
 @client.event
 async def on_Game_Release():
     while (True):
         if newGameAvailable() == True:
+            requestData()
             channelList = dataCol.find({}, {'ChannelID':1, '_id':0})
             await client.wait_until_ready()
             for i in channelList:
@@ -49,10 +45,8 @@ async def on_Game_Release():
                 channelToSend = client.get_channel(Cid)  
                 await channelToSend.send("@everyone", embed = newGameEmbed())
             print ("Sent a new update to all channels")
-        await asyncio.sleep(60)
+        await asyncio.sleep(120)
 
-
-client.loop.create_task(epic_Request())
 client.loop.create_task(on_Game_Release())
 
    
