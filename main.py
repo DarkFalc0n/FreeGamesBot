@@ -37,7 +37,7 @@ async def on_message(message):
 async def on_Game_Release():
     while (True):
         if newGameAvailable() == True:
-            requestData()
+            await requestData()
             channelList = dataCol.find({}, {'ChannelID':1, '_id':0})
             await client.wait_until_ready()
             for i in channelList:
