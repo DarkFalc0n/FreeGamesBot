@@ -9,7 +9,7 @@ url = "https://store-site-backend-static.ak.epicgames.com/freeGamesPromotions"
 payload={}
 headers = {}
 
-def requestData():
+async def requestData():
     print("Fetched data now")
     response = requests.request("GET", url, headers=headers, data=payload)
     gameData = json.loads(response.text)
